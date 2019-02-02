@@ -11,14 +11,12 @@ test_data = image.ImageDataGenerator()
 # Training & Test Sets
 training = train_data.flow_from_directory('OurClass',target_size=(150,150))
 testing = test_data.flow_from_directory('testClass',target_size=(150,150))
-# Extract and display Histogram of Oriented Gradient Features for single face 
-#[hogFeature, visualization]= extractHOGFeatures(read(training[1],1))
-#imshow(read(training(person),1))
+#import Keras
 from keras.layers import Conv2D,Dense,Flatten,MaxPooling2D,Activation
 from keras.models import Sequential
 
 names=['Devasish','Disha']
-
+#model
 model = Sequential()
 model.add(Conv2D(32,(3,3),input_shape=(150,150,3)))
 model.add(Activation("relu"))
@@ -30,7 +28,7 @@ model.add(Dense(2,activation="softmax"))
 model.compile(loss="binary_crossentropy",optimizer="adam",metrics=['accuracy'])
 model.fit_generator(training,steps_per_epoch=10,epochs=1)
 s = model.evaluate_generator(testing,steps=10,verbose=0)
-
+# Live stream
 detector = dlib.get_frontal_face_detector()
 cam = cv2.VideoCapture(0)
 color_green = (0,255,0)
@@ -48,5 +46,6 @@ for i in range(1000):
     predicting = image.ImageDataGenerator()
     crop_img = predicting.flow(crop_img,batch_size=1)
     name = model.predict_generator(crop_img,steps=1).argmax()
+    print(names[name])
     cv2.imshow('LiveStream', img)
 cv2.destroyAllWindows()
