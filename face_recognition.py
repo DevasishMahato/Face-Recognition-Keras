@@ -33,11 +33,10 @@ def conv2D_model(input_shape_value):
     model.add(MaxPooling2D(pool_size=(2,2)))
 
     model.add(Conv2D(16,(3,3),input_shape = input_shape_value))
-    model.add(Activation("softmax"))
+    model.add(Activation("leakyrelu"))
     model.add(MaxPooling2D(pool_size=(2,2)))
 
     model.add(Flatten())
-    model.add(Dense(64,activation="relu"))
     model.add(Dense(2,activation="softmax"))
 
     metric = 'accuracy'
